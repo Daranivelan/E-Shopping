@@ -3,25 +3,61 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>E-Shopping Site</title>
+    <title>Login</title>
     <link rel="stylesheet" href="styles.css" />
+    <script
+      async
+      defer
+      crossorigin="anonymous"
+      src="https://connect.facebook.net/en_US/sdk.js"
+    ></script>
+    <script>
+      window.fbAsyncInit = function () {
+        FB.init({
+          appId: "3217356395067676", // Replace with your Facebook App ID
+          cookie: true,
+          xfbml: true,
+          version: "v16.0", // Use the latest version available
+        });
+
+        FB.AppEvents.logPageView();
+      };
+
+      function facebookLogin() {
+        FB.login(
+          function (response) {
+            if (response.authResponse) {
+              console.log("Welcome! Fetching your information.... ");
+              FB.api("/me", { fields: "name,email" }, function (response) {
+                console.log("Good to see you, " + response.name + ".");
+                // You can redirect to index page or save user info in localStorage
+                window.location.href = "index.html";
+              });
+            } else {
+              console.log("User cancelled login or did not fully authorize.");
+            }
+          },
+          { scope: "public_profile,email" }
+        );
+      }
+    </script>
   </head>
   <body>
-    <script src="./scripts.js"></script>
-    <div>
-      <h1 class="myH1">E - Shopping Site</h1>
-      <p id="userGreeting"></p>
-      <div style="margin: 50px auto; text-align: center">
-        <label for="Category" style="font-size: 1.3rem"
-          >Choose a category:</label
-        >
-        <select
-          name="Category"
-          id="categories"
-          onchange="onCategoryChange(this)"
-        ></select>
-      </div>
+    <h1 class="myH1">Login</h1>
+    <div class="login-container">
+      <form id="loginForm" action="index.html">
+        <h2>Login</h2>
+        <hr />
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required /><br />
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required /><br />
+        <button type="submit">Login</button>
+      </form>
+      <button type="button" onclick="facebookLogin()">
+        Login with Facebook
+      </button>
     </div>
-    <div id="products" class="products-container"></div>
+    <script src="scripts.js"></script>
   </body>
 </html>
