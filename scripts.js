@@ -22,7 +22,7 @@ const onCategoryChange = (elem) => {
 const onBillDone = () => {
   localStorage.removeItem("buy_product");
   localStorage.removeItem("payment_details");
-  window.location.href = "index.html";
+  window.location.href = "main.html";
 };
 
 const displayBill = () => {
@@ -31,7 +31,7 @@ const displayBill = () => {
   );
   const data = JSON.parse(localStorage.getItem("buy_product") || "null");
   if (!payment_details || !data) {
-    window.location.href = "index.html";
+    window.location.href = "main.html";
   }
   document.getElementById(
     "billform"
