@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
     <link rel="stylesheet" href="styles.css" />
-    <script
+    <!-- <script
       async
       defer
       crossorigin="anonymous"
       src="https://connect.facebook.net/en_US/sdk.js"
-    ></script>
-    <script>
+    ></script> -->
+    <!-- <script>
       window.fbAsyncInit = function () {
         FB.init({
           appId: "3217356395067676", // Replace with your Facebook App ID
@@ -40,6 +40,29 @@
           { scope: "public_profile,email" }
         );
       }
+    </script> -->
+
+    <script>
+      window.fbAsyncInit = function () {
+        FB.init({
+          appId: "1067157287775905",
+          xfbml: true,
+          version: "v20.0",
+        });
+        FB.AppEvents.logPageView();
+      };
+
+      (function (d, s, id) {
+        var js,
+          fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {
+          return;
+        }
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      })(document, "script", "facebook-jssdk");
     </script>
   </head>
   <body>
@@ -54,9 +77,18 @@
         <input type="password" id="password" name="password" required /><br />
         <button type="submit">Login</button>
       </form>
-      <button type="button" onclick="facebookLogin()">
+      <!-- <button type="button" onclick="facebookLogin()">
         Login with Facebook
-      </button>
+      </button> -->
+
+      <fb:login-button
+        scope="public_profile,email"
+        onlogin="checkLoginState();"
+      >
+        <button type="button" onclick="facebookLogin()">
+          Login with Facebook
+        </button>
+      </fb:login-button>
     </div>
     <script src="scripts.js"></script>
   </body>

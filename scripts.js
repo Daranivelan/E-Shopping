@@ -112,3 +112,9 @@ FB.api("/me", { fields: "name,email" }, function (response) {
   localStorage.setItem("fbUser", JSON.stringify(response));
   window.location.href = "index.html";
 });
+
+function checkLoginState() {
+  FB.getLoginStatus(function (response) {
+    statusChangeCallback(response);
+  });
+}
