@@ -114,7 +114,17 @@ FB.api("/me", { fields: "name,email" }, function (response) {
 });
 
 function checkLoginState() {
-  FB.getLoginStatus(function (response) {
-    statusChangeCallback(response);
-  });
+  function checkLoginState() {
+    FB.getLoginStatus(function (response) {
+      if (response.status === "connected") {
+        // If the user is logged in, redirect to another page
+        FB.api("/me", { fields: "name,email" }, function (response) {
+          localStorage.setItem("fbUser", JSON.stringify(response));
+          window.location.href = "main.html"; // Change this to your desired page
+        });
+      } else {
+        console.log("User not authenticated");
+      }
+    });
+  }
 }

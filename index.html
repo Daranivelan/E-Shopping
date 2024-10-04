@@ -5,42 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
     <link rel="stylesheet" href="styles.css" />
-    <!-- <script
-      async
-      defer
-      crossorigin="anonymous"
-      src="https://connect.facebook.net/en_US/sdk.js"
-    ></script> -->
-    <!-- <script>
-      window.fbAsyncInit = function () {
-        FB.init({
-          appId: "3217356395067676", // Replace with your Facebook App ID
-          cookie: true,
-          xfbml: true,
-          version: "v16.0", // Use the latest version available
-        });
-
-        FB.AppEvents.logPageView();
-      };
-
-      function facebookLogin() {
-        FB.login(
-          function (response) {
-            if (response.authResponse) {
-              console.log("Welcome! Fetching your information.... ");
-              FB.api("/me", { fields: "name,email" }, function (response) {
-                console.log("Good to see you, " + response.name + ".");
-                // You can redirect to index page or save user info in localStorage
-                window.location.href = "index.html";
-              });
-            } else {
-              console.log("User cancelled login or did not fully authorize.");
-            }
-          },
-          { scope: "public_profile,email" }
-        );
-      }
-    </script> -->
 
     <script>
       window.fbAsyncInit = function () {
@@ -63,6 +27,25 @@
         js.src = "https://connect.facebook.net/en_US/sdk.js";
         fjs.parentNode.insertBefore(js, fjs);
       })(document, "script", "facebook-jssdk");
+
+      function facebookLogin() {
+        FB.login(
+          function (response) {
+            if (response.authResponse) {
+              FB.api("/me", { fields: "name,email" }, function (userInfo) {
+                // Store user data in localStorage
+                localStorage.setItem("fbUser", JSON.stringify(userInfo));
+
+                // Redirect to main page after successful login
+                window.location.href = "main.html";
+              });
+            } else {
+              console.log("User cancelled login or did not fully authorize.");
+            }
+          },
+          { scope: "public_profile,email" }
+        ); // You can request more permissions here if needed
+      }
     </script>
   </head>
   <body>
@@ -77,9 +60,6 @@
         <input type="password" id="password" name="password" required /><br />
         <button type="submit">Login</button>
       </form>
-      <!-- <button type="button" onclick="facebookLogin()">
-        Login with Facebook
-      </button> -->
 
       <fb:login-button
         scope="public_profile,email"
