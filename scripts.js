@@ -110,7 +110,7 @@ if (fbUser) {
 
 FB.api("/me", { fields: "name,email" }, function (response) {
   localStorage.setItem("fbUser", JSON.stringify(response));
-  window.location.href = "index.html";
+  window.location.href = "main.html";
 });
 
 function checkLoginState() {
